@@ -68,10 +68,7 @@ module RealtimeValidations
     end
 
     def model_valid?(model)
-      begin
-        model.valid?
-      rescue
-      end
+      model.valid?
     end
 
     def retrieve_model_errors(model, field)
