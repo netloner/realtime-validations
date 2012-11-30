@@ -8,8 +8,22 @@ var RealtimeValidations = {
 
   bind_field : function(field) {
     var field_to_validate = $('#' + field.id);
+    var delayed = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+
     if (RealtimeValidations.should_bind_field(field_to_validate)) {
-      field_to_validate.blur(RealtimeValidations.bind_field_on_blur);
+      field_to_validate.keyup(function () {
+        var field = $(this);
+
+        delayed(function () {
+          RealtimeValidations.bind_field_on_blur(field);
+        }, 1000);
+      });
     }
   },
 
@@ -21,8 +35,7 @@ var RealtimeValidations = {
     return validate == 'true';
   },
 
-  bind_field_on_blur : function() {
-    var field = $(this);
+  bind_field_on_blur : function(field) {
     var form_to_validate = $('form[validation="true"]');
     var validation_path = RealtimeValidations.path(form_to_validate);
     var model = form_to_validate.attr('model');
