@@ -141,6 +141,12 @@ var RealtimeValidations = {
 $(document).ready(RealtimeValidations.bind_fields);
 
 $(document).ajaxSend(function(e, xhr, options) {
-  var token = $("meta[name='csrf-token']").attr("content");
-  xhr.setRequestHeader("X-CSRF-Token", token);
+    var token = $("meta[name='csrf-token']").attr("content");
+    try {
+
+        xhr.setRequestHeader("X-CSRF-Token", token);
+
+    } catch (err) {
+        // conflict with jquery ajax upload
+    }
 });
