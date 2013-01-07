@@ -36,7 +36,8 @@ var RealtimeValidations = {
   },
 
   bind_field_on_blur : function(field) {
-    var form_to_validate = $('form[validation="true"]');
+    //Enable multi form in one page support
+    var form_to_validate = field.closest('form[validation="true"]');
     var validation_path = RealtimeValidations.path(form_to_validate);
     var model = form_to_validate.attr('model');
     var field_name = field.attr('name');
